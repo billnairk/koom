@@ -11,5 +11,11 @@ html(lang="en")
         header
             h1 KOOM
         main
-        script(src="/socket.io/socket.io.js")
+            form#nick
+                input(type="text", placeholder="아이디", required)
+                button 로그인
+            ul
+            form#message
+                input(type="text", placeholder="메시지 입력", required)
+                button 메시지 보내기
         script(src="/public/js/app.js")
