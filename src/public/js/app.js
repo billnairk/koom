@@ -11,14 +11,7 @@ socket.addEventListener("close", () =>
 // 브라우저에 메시지 출력
 socket.addEventListener("message", msg => {
     const li = document.createElement("li");
-    const data = JSON.parse(msg.data);
-    if (data.userMsg) {
-        li.innerText = `${data.userNick}: ${data.userMsg}`;
-    } else if (data.wUser) {
-        li.innerText = `${data.wUser}님이 접속하셨습니다.`;
-    } else if (data.cName) {
-        li.innerText = `${data.oName}님이 닉네임을 ${data.cName}(으)로 변경하였습니다.`;
-    }
+    li.innerText = msg.data;
     messageList.appendChild(li);
 });
 

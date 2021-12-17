@@ -27,39 +27,26 @@ wss.on("connection", socket => {
                 if (userNick == "Anonymous") {
                     userNick = parsed.payload;
                     sockets.forEach(aSocket =>
-                        aSocket.send(welcomeMsg(userNick))
+                        aSocket.send(`${userNick}님이 접속하셨습니다.`)
                     );
                 } else {
                     const oldName = userNick;
                     userNick = parsed.payload;
                     sockets.forEach(aSocket =>
-                        aSocket.send(changeUserName(userNick, oldName))
+                        aSocket.send(
+                            `${oldName}님이 닉네임을 ${userNick}(으)로 변경하셨습니다.`
+                        )
                     );
                 }
                 break;
             case "new_message":
                 const userMsg = parsed.payload;
                 sockets.forEach(aSocket =>
-                    aSocket.send(makeServerJson(userNick, userMsg))
+                    aSocket.send(`${userNick}: ${userMsg}`)
                 );
                 break;
         }
     });
 });
-
-function changeUserName(cName, oName) {
-    const changeName = { cName, oName };
-    return JSON.stringify(changeName);
-}
-
-function welcomeMsg(wUser) {
-    const make = { wUser };
-    return JSON.stringify(make);
-}
-
-function makeServerJson(userNick, userMsg) {
-    const make = { userNick, userMsg };
-    return JSON.stringify(make);
-}
 
 server.listen(3000, handleListen);
