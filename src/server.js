@@ -17,27 +17,32 @@ const sockets = [];
 
 wss.on("connection", socket => {
     sockets.push(socket);
-    let user = "Anonymous";
+    let userNick = "Anonymous";
     console.log("Connected to Browser ✅");
     socket.on("close", () => console.log("Disconnected from Browser ❌"));
     socket.on("message", message => {
-        if (JSON.parse(message).type === "nick") {
-            if (user == "Anonymous") {
-                user = JSON.parse(message).payload;
-                sockets.forEach(aSocket => aSocket.send(welcomeMsg(user)));
-            } else {
-                const oldName = user;
-                user = JSON.parse(message).payload;
+        const parsed = JSON.parse(message);
+        switch (parsed.type) {
+            case "nick":
+                if (userNick == "Anonymous") {
+                    userNick = parsed.payload;
+                    sockets.forEach(aSocket =>
+                        aSocket.send(welcomeMsg(userNick))
+                    );
+                } else {
+                    const oldName = userNick;
+                    userNick = parsed.payload;
+                    sockets.forEach(aSocket =>
+                        aSocket.send(changeUserName(userNick, oldName))
+                    );
+                }
+                break;
+            case "new_message":
+                const userMsg = parsed.payload;
                 sockets.forEach(aSocket =>
-                    aSocket.send(changeUserName(user, oldName))
+                    aSocket.send(makeServerJson(userNick, userMsg))
                 );
-            }
-        }
-        if (JSON.parse(message).type === "new_message") {
-            const userMsg = JSON.parse(message).payload;
-            sockets.forEach(aSocket =>
-                aSocket.send(makeServerJson(user, userMsg))
-            );
+                break;
         }
     });
 });
@@ -52,8 +57,8 @@ function welcomeMsg(wUser) {
     return JSON.stringify(make);
 }
 
-function makeServerJson(user, userMsg) {
-    const make = { user, userMsg };
+function makeServerJson(userNick, userMsg) {
+    const make = { userNick, userMsg };
     return JSON.stringify(make);
 }
 
