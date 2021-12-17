@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        <style> ul { list-style-type: none; padding-left: 0; } </style>
+        title Koom
+    body
+        header
+            h1 KOOM
+        main
+            form#nick
+                input(type="text", placeholder="아이디", required)
+                button 로그인
+            ul
+            form#message
+                input(type="text", placeholder="메시지 입력", required)
+                button 메시지 보내기
+        script(src="/public/js/app.js")
