@@ -17,24 +17,26 @@ const sockets = [];
 
 wss.on("connection", socket => {
     sockets.push(socket);
-    let userNick = "Anonymous";
+    socket["userNick"] = "Anonymous";
     console.log("Connected to Browser ✅");
     socket.on("close", () => console.log("Disconnected from Browser ❌"));
     socket.on("message", message => {
         const parsed = JSON.parse(message);
         switch (parsed.type) {
             case "nick":
-                if (userNick == "Anonymous") {
-                    userNick = parsed.payload;
-                    sockets.forEach(aSocket =>
-                        aSocket.send(`${userNick}님이 접속하셨습니다.`)
-                    );
-                } else {
-                    const oldName = userNick;
-                    userNick = parsed.payload;
+                if (socket["userNick"] == "Anonymous") {
+                    socket["userNick"] = parsed.payload;
                     sockets.forEach(aSocket =>
                         aSocket.send(
-                            `${oldName}님이 닉네임을 ${userNick}(으)로 변경하셨습니다.`
+                            `${socket["userNick"]}님이 접속하셨습니다.`
+                        )
+                    );
+                } else {
+                    const oldName = socket["userNick"];
+                    socket["userNick"] = parsed.payload;
+                    sockets.forEach(aSocket =>
+                        aSocket.send(
+                            `${oldName}님이 닉네임을 ${socket["userNick"]}(으)로 변경하셨습니다.`
                         )
                     );
                 }
@@ -42,7 +44,7 @@ wss.on("connection", socket => {
             case "new_message":
                 const userMsg = parsed.payload;
                 sockets.forEach(aSocket =>
-                    aSocket.send(`${userNick}: ${userMsg}`)
+                    aSocket.send(`${socket["userNick"]}: ${userMsg}`)
                 );
                 break;
         }
