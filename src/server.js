@@ -14,11 +14,12 @@ const handleListen = () => console.log("Create Server! http://localhost:3000/");
 const httpServer = http.createServer(app);
 const wsServer = new SocketIO.Server(httpServer);
 
-wsServer.on("connection", socket => {
-    socket.on("enter_room", (roomName, done) => {
-        socket.join(roomName);
-        done();
-    });
+wsServer.on("connection", (socket) => {
+  socket.on("enter_room", (roomName, done) => {
+    socket.join(roomName);
+    done();
+    socket.to(roomName).emit("welcomeMsg");
+  });
 });
 
 httpServer.listen(3000, handleListen);
