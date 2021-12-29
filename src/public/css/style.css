@@ -1,0 +1,45 @@
+/* #welcome {
+    display: flex;
+}
+div#welcome form {
+    margin-right: 50px;
+    margin-left: 100px;
+} */
+
+#room ul {
+    width: 500px;
+    height: 300px;
+    border: solid black 1px;
+    padding: 0px 10px 0px 10px;
+    border-radius: 3px;
+    overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+body {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    margin: 5px;
+}
+
+li.room {
+    cursor: pointer;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+li.room:hover {
+    background-color: pink;
+    font-weight: bold;
+    color: white;
+}

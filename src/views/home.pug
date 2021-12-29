@@ -4,23 +4,26 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
-        <style> ul { list-style-type: none; padding-left: 0; } </style>
+        //- link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        link(rel="stylesheet", href="../public/css/style.css")
         title Koom
     body
         header
-            h1 KOOM
+            h1 <a href="http://localhost:3000/">KOOM</a>
         main
             div#welcome
-                form
-                    input(type="text", placeholder="방 이름", required)
-                    button 입장
+                form#login
+                    input(type="text", placeholder="nickname", required)
+                    button login
+                form#join
+                    input(type="text", placeholder="enter room name", required)
+                    button join
+            div#roomList
+                p 생성된 방
+                ul
             div#room
                 h3
                 ul
-                form#name
-                    input(type="text", placeholder="이름", required)
-                    button 저장
                 form#msg
                     input(type="text", placeholder="메시지", required)
                     button 전송
