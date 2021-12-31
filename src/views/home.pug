@@ -11,21 +11,5 @@ html(lang="en")
         header
             h1 <a href="http://localhost:3000/">KOOM</a>
         main
-            div#welcome
-                form#login
-                    input(type="text", placeholder="nickname", required)
-                    button login
-                form#join
-                    input(type="text", placeholder="enter room name", required)
-                    button join
-            div#roomList
-                p 생성된 방
-                ul
-            div#room
-                h3
-                ul
-                form#msg
-                    input(type="text", placeholder="메시지", required)
-                    button 전송
         script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")
